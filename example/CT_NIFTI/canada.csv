@@ -1,0 +1,5 @@
+id;sex;age;site;tstage;nstage;mstage;groupstage;overall_hpv_status;time1;time2;time3;time4;time5;therapy;surgery;Time - diagnosis to last follow-up(days);Locoregional;Distant;Death;pixel;vol;area;Time - diagnosis to LR (days);Time - diagnosis to DM (days);Time - diagnosis to Death (days)
+HN-CHUM-001;M;82;Oropharynx;T2;N2;M0;Stage IV;N/A;0;9;TBD;53;102;chemo radiation;N/A;1806;0;0;0;9424;29719.06836;733.3748331;;;
+HN-CHUM-003;M;56;unknown;Tx;N2;M0;N/A;N/A;0;46;TBD;88;136;chemo radiation;N/A;1841;0;0;0;10864;33879.51563;518.7983215;;;
+HN-HGJ-001;M;79;Larynx;T3;N0;M0;stage III;-;0;71;64;97;140;chemo radiation;0;2123;1;0;0;2630;8201.686523;1040.95459;692;;
+HN-HGJ-002;M;41;Nasopharynx;T1;N1;M0;stage IIB;-;0;37;35;63;108;chemo radiation;0;2114;1;0;0;17404;54274.58594;1232.146014;918;;
