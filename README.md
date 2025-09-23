@@ -1,43 +1,21 @@
 #  Convolutional Neural Network (CNN) for head and neck outcome classification
 
-Image based prognosis in head and neck cancer using convolutional neural networks: a case study in reproducibility and optimization.
+Image-based prognosis in head and neck cancer using convolutional neural networks: a case study in reproducibility and optimization.
 
 - [Convolutional Neural Network (CNN) for head and neck outcome classification](#convolutional-neural-network-cnn-for-head-and-neck-outcome-classification)
   - [Description](#description)
-  - [Requirements](#requirements)
-  - [Notes](#notes)
   - [Data pre-processing](#data-pre-processing)
   - [Running the model](#running-the-model)
-    - [Example](#example)
     - [Data split](#data-split)
     - [Training](#training)
     - [Clinical Data](#clinical-data)
-  - [Reproducibility](#reproducibility)
   - [Results](#results)
-  - [Citation](#citation)
 
 ## Description
 
-In this work, we evaluated the reproducility of proposed Convolutional Neural Networks for head and neck cancer prognosis.
-As a result, we developed a less complex network based on previous work, trained and evaluated the performance for outcome prediction (distant metastasis, loco-regional failure and overall survival), and evaluated the impact of pre-processing the CT scans and the model selection method.
+In this work, we evaluated the reproducibility of the proposed Convolutional Neural Networks for head and neck cancer prognosis.
+As a result, we developed a less complex network based on previous work, trained and evaluated the performance for outcome prediction (distant metastasis, loco-regional failure, and overall survival), and evaluated the impact of pre-processing the CT scans and the model selection method.
 In this repository, you'll find the necessary tools to train/validate/test the proposed model. Additionally, it also includes the necessary tools to reproduce the work by using the same seeds (./seed.xlsx).
-
-‼️In the meantime, we've updated the code and library versions (due to vulnerabilities). To recreate the environment used to train our model, use the docker image `pmateus/hn-cnn:1.4.0` and code version available in the branch `reproduce`.
-
-## Requirements
-
-To train/validate/test the model you can use docker (the necessary docker images are available) and docker-compose. This avoids the need to configure a local environment and guarantees an equal environment to the one used while developing the network.
-
-Docker images:
-- FSL official image: `vistalab/fsl-v5.0`
-- Custom docker image for pre-processing and training the network: `pmateus/hn-cnn:1.5.0`
-
-It's also possible to configure a local environment without using docker, directly install the necessary dependencies using the `requirements.txt` file.
-
-## Notes
-
-Due to vulnerabilities in the dependencies, we updated the versions starting with release `pmateus/hn-cnn:1.5.0`.
-The information on the original versions and code can be found in the release for version `1.4.0` (and on the branch `reproduce`).
 
 ## Data pre-processing
 
@@ -58,13 +36,6 @@ For step 3, 4, and 5, we provide the script `image_preprocesing/windowing_croppi
 
 The script './training.py' provides the base to train and evaluate the model under different configurations.
 To run the model, make sure to:
-- (Using Docker) Set the path to the data folder and to store the logs and backup in the docker-compose file:
-```yaml
-    volumes:
-      - ./path/to/data:/mnt/data
-      - ./backup_models:/mnt/backup
-      - ./logs:/mnt/logs
-```
 - Set the path for the training, validation, and testing sets in the './training.py' script (check the example script under './example'):
 ```python
 DATA = {
@@ -82,13 +53,6 @@ DATA = {
     }
 }
 ```
-
-### Example
-
-In './example' you can find a small subset of images to test the network training:
-- In the terminal: `docker-compose run hn-cnn`
-- Once in the container's terminal: `cd /mnt`
-- Run the training script: `python3 training.py`
 
 ### Data split
 
@@ -157,75 +121,6 @@ file `parse_data.py`:
 ``` 
 If you change this set, make sure to also modify the number of neurons in the network accordingly (file `cnn.py`).
 
-## Reproducibility
-
-‼️In the meantime, we've updated the code and library versions (due to vulnerabilities). To recreate the environment used to train our model, use the docker image `pmateus/hn-cnn:1.4.0` and code version available in the branch `reproduce`.
-
-The training scripts allow to set up the necessary seeds in order to make the results fully reproducible:
-- the random seed for python (`random.seed()`)
-- the random seed for the data split, only necessary when performing cross-validation (`StratifiedKFold`)
-- the random seed for the pytorch library (`torch.manual_seed()`)
-
-When reproducing the results from the manuscript (using the seeds provided in this repository), 
-please include the following in the training script (as exemplified in `/data/models/training_example_dm.py`):
-
-```python
-random.seed()
-# Include the next line:
-random_seed_split = random.randint(0, 9174937)
-torch.manual_seed()
-```
-
-Finally, the scripts provided in the folder `/data/models` already include all the necessary configurations 
-to reproduce our results for the prediction of each outcome.
-
-We've trained the network in [DSRI](https://dsri.maastrichtuniversity.nl), an openshift cluster of servers. Although 
-we provide the seeds and scripts to reproduce the results, inconsistencies may occur in certain machines. 
-We observed that some systems differ when executing the `torch.nn.Dropout` function (using the same seeds).
-From experiments with different machines, we think this is caused by different CPU architecture. To obtain 
-the same results that we provide, you should use a CPU with an ARM architecture ( tested in AWS with 
-an Ubuntu 24.04 LTS image and a t4g.micro 64-bit ARM CPU).
-```python
-import random
-import torch
-random.seed(7651962)
-random_seed_split = random.randint(0, 9174937)
-torch.manual_seed(775135)
-# Gives the same result:
-data = torch.randn(4, 4)
-# Gives different results:
-dp1 = torch.nn.Dropout(p=0.3)
-dp1(data)
-# Original experiments in DSRI (also works in AWS with an 
-# ARM architecture)
-# tensor([[-1.0361, -3.5810, -1.1379,  1.8477],
-#         [-0.0000, -1.2687, -0.0000,  1.7217],
-#         [-1.4952, -2.3690, -0.0955, -0.0000],
-#         [-0.4844,  1.5011,  1.8367,  2.3154]])
-# vs
-# x86 architecture
-# tensor([[-1.0361, -0.0000, -0.0000,  1.8477],
-#         [-2.0117, -1.2687, -0.0785,  0.0000],
-#         [-0.0000, -2.3690, -0.0955, -0.0000],
-#         [-0.4844,  1.5011,  1.8367,  2.3154]])
-```
-
-Setting up the following configurations did not change the behavior. The `Dropout` function still provided different 
-results:
-```python
-device = torch.device("cpu")
-torch.backends.cudnn.deterministic = True
-torch.set_num_threads(1)
-```
-
-Using our own implementation of `Dropout` can be an option to avoid this problem in the future:
-```python
-x = torch.ones(10, 20)
-p = 0.5
-mask = torch.distributions.Bernoulli(probs=(1-p)).sample(x.size())
-x[~mask.bool()] = x.mean()
-out = x * mask * 1/(1-p)
-```
 ## Results
 
 Performance results using only imaging data:
@@ -247,10 +142,3 @@ Performance results using imaging and clinical data:
 Training set: [HGJ and CHUS](https://doi.org/10.7937/K9/TCIA.2017.8oje5q00)
 Validation set: [HMR and CHUS](https://doi.org/10.7937/K9/TCIA.2017.8oje5q00)
 Testing set: [Maastro](https://doi.org/10.7937/tcia.2019.8kap372n)
-
-For more information check the [publication](https://doi.org/10.1038/s41598-023-45486-5).
-
-## Citation
-
-If you find this code useful for your research, please cite:
-[10.1038/s41598-023-45486-5](https://doi.org/10.1038/s41598-023-45486-5)
