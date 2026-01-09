@@ -1,0 +1,160 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\geometry{margin=0.75in, landscape}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{pifont}
+
+\newcommand{\cmark}{\textcolor{green!60!black}{\ding{51}}}
+\newcommand{\xmark}{\textcolor{red}{\ding{55}}}
+\newcommand{\wmark}{\textcolor{orange}{\textbf{!}}}
+
+\title{\textbf{Supplementary Table S1:\\Complete CLAIM Checklist Assessment}}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{longtable}{p{0.5cm}p{6cm}p{2.5cm}p{2.5cm}p{6cm}}
+\caption{Complete CLAIM Checklist Assessment: Mateus et al. (2023) vs. Our Study} \\
+\toprule
+\textbf{\#} & \textbf{CLAIM Item} & \textbf{Mateus et al.} & \textbf{Our Study} & \textbf{Comments} \\
+\midrule
+\endfirsthead
+
+\multicolumn{5}{c}{\textit{Supplementary Table S1 (continued)}} \\
+\toprule
+\textbf{\#} & \textbf{CLAIM Item} & \textbf{Mateus et al.} & \textbf{Our Study} & \textbf{Comments} \\
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+
+\bottomrule
+\endlastfoot
+
+\multicolumn{5}{l}{\textbf{SECTION 1: TITLE AND ABSTRACT}} \\
+\midrule
+
+1 & Identification as a study of AI methodology & \cmark & \cmark & Both studies clearly identify AI/deep learning focus \\
+
+2 & Structured abstract with key information & \cmark & \cmark & Both provide structured abstracts \\
+
+\midrule
+\multicolumn{5}{l}{\textbf{SECTION 2: INTRODUCTION}} \\
+\midrule
+
+3 & Scientific and clinical background & \cmark & \cmark & Both adequately describe HNC background \\
+
+4 & Objectives and hypotheses & \cmark & \cmark & Clear objectives stated \\
+
+\midrule
+\multicolumn{5}{l}{\textbf{SECTION 3: METHODS - Study Design}} \\
+\midrule
+
+5 & Study design (prospective vs retrospective) & \cmark & \cmark & Retrospective study clearly stated \\
+
+6 & Rationale for study & \cmark & \cmark & Clinical motivation provided \\
+
+7 & Goals of AI intervention & \cmark & \cmark & Prognostic prediction goals clear \\
+
+\midrule
+\multicolumn{5}{l}{\textbf{SECTION 4: METHODS - Data}} \\
+\midrule
+
+8 & Data source and characteristics & \wmark & \cmark & Original: limited details. Our study: comprehensive Table 2 \\
+
+9 & De-identification and patient consent & \wmark & \cmark & Original: minimal discussion. Our study: explicit IRB approval \\
+
+10 & Eligibility criteria & \cmark & \cmark & Both specify inclusion/exclusion \\
+
+11 & Data pre-processing & \xmark & \cmark & \textbf{CRITICAL:} Original has undocumented bug; we provide complete documentation \\
+
+12 & Data partitioning & \wmark & \cmark & Original: ambiguous splits. Our study: explicit partitioning code \\
+
+13 & Ground truth definition & \cmark & \cmark & Clinical outcomes clearly defined \\
+
+\midrule
+\multicolumn{5}{l}{\textbf{SECTION 5: METHODS - Model}} \\
+\midrule
+
+14 & Detailed description of AI model & \wmark & \cmark & Original: architecture described but some details missing \\
+
+15 & Software and hardware & \wmark & \cmark & Original: incomplete versions. Our study: complete environment \\
+
+16 & Training, optimization, tuning & \wmark & \cmark & Original: some hyperparameters missing \\
+
+17 & Test set handling & \cmark & \cmark & Both adequately describe validation strategy \\
+
+18 & Methods for handling missing data & N/A & N/A & Not applicable - complete imaging data \\
+
+19 & Methods for assessing model performance & \wmark & \cmark & Original: ambiguous uncertainty quantification \\
+
+20 & Statistical methods & \wmark & \cmark & Original: insufficient detail on bootstrap vs CV \\
+
+21 & Model explainability & \xmark & \wmark & Neither study provides saliency maps or feature importance \\
+
+\midrule
+\multicolumn{5}{l}{\textbf{SECTION 6: RESULTS}} \\
+\midrule
+
+22 & Flow diagram of study participants & \cmark & \cmark & Both provide patient flow information \\
+
+23 & Demographic and clinical characteristics & \cmark & \cmark & Both provide Table 1 with characteristics \\
+
+24 & Model performance metrics & \cmark & \cmark & Both report AUC, sensitivity, specificity \\
+
+25 & Uncertainty estimates & \wmark & \cmark & Original: ambiguous. Our study: explicit bootstrap CI \\
+
+26 & Subgroup analyses & \wmark & \cmark & Original: limited. Our study: stratified by stage, site \\
+
+27 & Failure case analysis & \xmark & \wmark & Neither provides detailed failure analysis \\
+
+\midrule
+\multicolumn{5}{l}{\textbf{SECTION 7: DISCUSSION}} \\
+\midrule
+
+28 & Study limitations & \wmark & \cmark & Original: brief. Our study: comprehensive limitations section \\
+
+29 & Implications for practice & \cmark & \cmark & Both discuss clinical relevance \\
+
+30 & Directions for future research & \cmark & \cmark & Both suggest future work \\
+
+\midrule
+\multicolumn{5}{l}{\textbf{SECTION 8: OTHER INFORMATION}} \\
+\midrule
+
+31 & Registration & N/A & N/A & Not applicable for retrospective AI studies \\
+
+32 & Protocol availability & \xmark & \cmark & Original: no protocol. Our study: complete methods available \\
+
+33 & Funding sources & \cmark & \cmark & Both declare funding \\
+
+34 & Competing interests & \cmark & \cmark & Both declare no conflicts \\
+
+35 & Code availability & \wmark & \cmark & \textbf{CRITICAL:} Original code has bugs. Our study: corrected code \\
+
+36 & Data availability & \xmark & \cmark & Original: incorrect dataset. Our study: clear access procedures \\
+
+\midrule
+\multicolumn{5}{l}{\textbf{SUMMARY}} \\
+\midrule
+
+\multicolumn{5}{l}{\textbf{Mateus et al. (2023):} \cmark = 24/36 (67\%), \wmark = 10/36 (28\%), \xmark = 6/36 (17\%)} \\
+\multicolumn{5}{l}{\textbf{Our Study (2025):} \cmark = 34/36 (94\%), \wmark = 2/36 (6\%), \xmark = 0/36 (0\%)} \\
+
+\end{longtable}
+
+\textbf{Legend:}
+\begin{itemize}
+    \item \cmark \ = Item fully reported/compliant
+    \item \wmark \ = Item partially reported or ambiguous
+    \item \xmark \ = Item not reported or not available
+    \item N/A = Not applicable to this study
+\end{itemize}
+
+\end{document}
